@@ -19,3 +19,12 @@ Route::get('/noticias/{slug}', [NoticiaController::class, 'show'])->name('notici
 // Rotas para Contatos
 Route::get('/contato', [ContatoController::class, 'exibirFormulario'])->name('contato.index');
 Route::post('/contato', [ContatoController::class, 'enviarFormulario'])->name('contato.enviar');
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified',
+])->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
+});
